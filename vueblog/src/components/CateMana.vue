@@ -37,6 +37,10 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
+              @click="editShow(scope.$index, scope.row)">修改
+            </el-button>
+            <el-button
+              size="mini"
               @click="handleEdit(scope.$index, scope.row)">编辑
             </el-button>
             <el-button
@@ -50,6 +54,24 @@
       <el-button type="danger" :disabled="this.selItems.length==0" style="margin-top: 10px;width: 100px;"
                  @click="deleteAll" v-if="this.categories.length>0">批量删除
       </el-button>
+      <!--弹窗数据-->
+      <el-dialog title="修改" :visible.sync="dialogFormVisible">
+        <el-form :model="editObj">
+<!--          <el-form-item label="编号">
+            <el-input v-model="editObj.id" auto-complete="off"></el-input>
+          </el-form-item>-->
+          <el-form-item label="栏目名称">
+            <el-input v-model="editObj.cateName" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="启用时间">
+            <el-date-picker type="date" v-model="editObj.date" placeholder="选择时间" @change="selectDate" format="yyyy年MM月dd日" value-formate="yyyy-MM-dd"  style="width: 100%;"></el-date-picker>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editDo">确 定</el-button>
+        </div>
+      </el-dialog>
     </el-main>
   </el-container>
 </template>
@@ -61,6 +83,13 @@
   export default{
     methods: {
       addNewCate(){
+        if(this.cateName==''){
+          this.$message({
+            type: 'info',
+            message: '新增栏目不能为空!请输入栏目名称'
+          });
+          return;
+        }
         this.loading = true;
         var _this = this;
         postRequest('/admin/category/', {cateName: this.cateName}).then(resp=> {
@@ -189,9 +218,45 @@
           }
           _this.loading = false;
         });
+      },
+      editShow(index,row){
+        debugger
+        //记录数据
+        this.editObj=row;
+        //显示弹窗
+        this.dialogFormVisible=true;
+      },
+      editDo(){
+        debugger
+        this.loading=true;
+        var _this = this;
+        putRequest('/admin/category/', this.editObj).then(resp=> {
+          if (resp.status == 200) {
+            var json = resp.data;
+            _this.$message({type: json.status, message: json.msg});
+            _this.refresh();
+          }
+          _this.loading = false;
+        }, resp=> {
+          if (resp.response.status == 403) {
+            _this.$message({
+              type: 'error',
+              message: resp.response.data
+            });
+          }
+          _this.loading = false;
+        });
+        //关闭弹窗
+        this.dialogFormVisible=false;
+      },
+      selectDate(val){
+        debugger
+        var d = new Date(val);
+        this.editObj.date= d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
       }
     },
     mounted: function () {
+      debugger
       this.loading = true;
       this.refresh();
     },
@@ -200,7 +265,14 @@
         cateName: '',
         selItems: [],
         categories: [],
-        loading: false
+        loading: false,
+
+        dialogFormVisible:false,
+        editObj:{
+          id:'',
+          cateName:'',
+          date:''
+        }
       }
     }
   }

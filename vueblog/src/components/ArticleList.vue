@@ -33,6 +33,7 @@
   import {getRequest} from '../utils/api'
   export default {
     mounted: function () {
+      debugger
       var _this = this;
       getRequest("/isAdmin").then(resp=> {
         if (resp.status == 200) {

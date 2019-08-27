@@ -31,6 +31,7 @@
     },
     mounted: function () {
       var _this = this;
+      debugger
       getRequest("/currentUserEmail").then(resp=> {
         if (resp.status == 200) {
           _this.emailValidateForm.email = resp.data;

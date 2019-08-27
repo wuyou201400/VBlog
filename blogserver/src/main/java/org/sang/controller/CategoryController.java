@@ -4,11 +4,12 @@ import org.sang.bean.Category;
 import org.sang.bean.RespBean;
 import org.sang.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -20,9 +21,19 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+/*
+    @InitBinder
+    protected void init(ServletRequestDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(dateFormat, false));
+    }
+*/
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+        List<Category> all= categoryService.getAllCategories();
+        return all;
     }
 
     @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)

@@ -36,6 +36,7 @@
       }
     },
     mounted: function () {
+      debugger
       var aid = this.$route.query.aid;
       this.activeName = this.$route.query.an
       var _this = this;

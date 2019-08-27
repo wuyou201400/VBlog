@@ -35,6 +35,7 @@ export const putRequest = (url, params) => {
     url: `${base}${url}`,
     data: params,
     transformRequest: [function (data) {
+      debugger
       let ret = ''
       for (let it in data) {
         ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'

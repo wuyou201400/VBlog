@@ -19,7 +19,7 @@
       <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 3px" @click="searchClick">搜索
       </el-button>
     </div>
-    <!--<div style="width: 100%;height: 1px;background-color: #20a0ff;margin-top: 8px;margin-bottom: 0px"></div>-->
+    <div style="width: 100%;height: 1px;background-color: #20a0ff;margin-top: 8px;margin-bottom: 0px"></div>
     <el-table
       ref="multipleTable"
       :data="articles"
@@ -100,6 +100,7 @@
       }
     },
     mounted: function () {
+      debugger
       var _this = this;
       this.loading = true;
       this.loadBlogs(1, this.pageSize);

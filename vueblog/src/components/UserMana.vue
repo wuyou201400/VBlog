@@ -80,6 +80,7 @@
   import {deleteRequest} from '../utils/api'
   export default{
     mounted: function () {
+      debugger
       this.loading = true;
       this.loadUserList();
       this.cardloading = Array.apply(null, Array(20)).map(function (item, i) {
@@ -238,9 +239,9 @@
         cardloading: [],
         keywords: '',
         users: [],
-        allRoles: [],
-        roles: [],
-        cpRoles: []
+        allRoles: [], //所有角色列表
+        roles: [],    //新的角色
+        cpRoles: []   //原来的角色
       }
     }
   }

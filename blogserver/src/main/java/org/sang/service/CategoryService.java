@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +34,8 @@ public class CategoryService {
     }
 
     public int addCategory(Category category) {
-        category.setDate(new Timestamp(System.currentTimeMillis()));
+//        category.setDate(new Timestamp(System.currentTimeMillis()));
+        category.setDate(new Date());
         return categoryMapper.addCategory(category);
     }
 }

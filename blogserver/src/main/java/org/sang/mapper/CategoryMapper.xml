@@ -13,7 +13,7 @@
         </foreach>
     </delete>
     <update id="updateCategoryById" parameterType="org.sang.bean.Category">
-        UPDATE category SET cateName=#{cateName} WHERE id=#{id}
+        UPDATE category SET cateName=#{cateName},date=#{date} WHERE id=#{id}
     </update>
     <insert id="addCategory" parameterType="org.sang.bean.Category">
         INSERT INTO category SET date=#{date},cateName=#{cateName}

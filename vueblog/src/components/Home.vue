@@ -4,9 +4,9 @@
       <div class="home_title">V部落博客管理平台</div>
       <div class="home_userinfoContainer">
         <el-dropdown @command="handleCommand">
-  <span class="el-dropdown-link home_userinfo">
-    {{currentUserName}}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
-  </span>
+          <span class="el-dropdown-link home_userinfo">
+            {{currentUserName}}<i class="el-icon-arrow-down el-icon--right home_userinfo"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="sysMsg">系统消息</el-dropdown-item>
             <el-dropdown-item command="MyArticle">我的文章</el-dropdown-item>
@@ -60,6 +60,7 @@
   export default{
     methods: {
       handleCommand(command){
+        debugger
         var _this = this;
         if (command == 'logout') {
           this.$confirm('注销登录吗?', '提示', {
