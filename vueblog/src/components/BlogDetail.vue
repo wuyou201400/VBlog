@@ -38,7 +38,7 @@
     mounted: function () {
       debugger
       var aid = this.$route.query.aid;
-      this.activeName = this.$route.query.an
+      this.activeName = this.$route.query.activeName;
       var _this = this;
       this.loading = true;
       getRequest("/article/" + aid).then(resp=> {
