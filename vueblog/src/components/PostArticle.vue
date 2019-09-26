@@ -63,14 +63,12 @@
     mounted: function () {
       debugger
       this.getCategories();
-      var from = this.$route.query.from;
-      this.from = from;
       var _this = this;
-      if (from != null && from != '' && from != undefined) {
-        var id = this.$route.query.id;
-        this.id = id;
+      this.from= this.$route.query.from;
+      if (this.from != null && this.from != '' && this.from != undefined) {
+        this.id = this.$route.query.id;
         this.loading = true;
-        getRequest("/article/" + id).then(resp => {
+        getRequest("/article/" + this.id).then(resp => {
           _this.loading = false;
           if (resp.status == 200) {
             _this.article = resp.data;

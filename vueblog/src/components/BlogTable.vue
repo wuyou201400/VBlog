@@ -14,7 +14,7 @@
       <el-input
         placeholder="通过标题搜索该分类下的博客..."
         prefix-icon="el-icon-search"
-        v-model="keywords" style="width: 400px" size="mini">
+        v-model="keywords" style="width: 600px" size="mini" title="通过标题搜索该分类下的博客">
       </el-input>
       <el-button type="primary" icon="el-icon-search" size="mini" style="margin-left: 3px" @click="searchClick">搜索
       </el-button>
@@ -26,7 +26,11 @@
       tooltip-effect="dark"
       style="width: 100%;overflow-x: hidden; overflow-y: hidden;"
       max-height="390"
-      @selection-change="handleSelectionChange" v-loading="loading">
+      @selection-change="handleSelectionChange"
+      v-loading="loading"
+      element-loading-text="拼命加载中"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.8)">
       <el-table-column
         type="selection"
         width="35" align="left" v-if="showEdit || showDelete">
@@ -73,8 +77,8 @@
       <el-pagination
         background
         :page-size="pageSize"
-        layout="prev, pager, next"
-        :total="totalCount" @current-change="currentChange" v-show="this.articles.length>0">
+        layout="total,sizes,prev, pager, next, jumper"
+        :total="totalCount" :page-sizes="[2, 5, 10, 20]" @current-change="currentChange" @size-change="handleSizeChange" v-show="this.articles.length>0">
       </el-pagination>
     </div>
   </div>
@@ -94,17 +98,16 @@
         loading: false,
         currentPage: 1,
         totalCount: -1,
-        pageSize: 6,
+        pageSize: 2,
         keywords: '',
         dustbinData: []
       }
     },
     mounted: function () {
       debugger
-      var _this = this;
       this.loading = true;
-      this.loadBlogs(1, this.pageSize);
-      var _this = this;
+      this.loadBlogs(this.currentPage, this.pageSize);
+      const _this = this;
       window.bus.$on('blogTableReload', function () {
         _this.loading = true;
         _this.loadBlogs(_this.currentPage, _this.pageSize);
@@ -128,7 +131,14 @@
       currentChange(currentPage){
         this.currentPage = currentPage;
         this.loading = true;
-        this.loadBlogs(currentPage, this.pageSize);
+        this.loadBlogs(this.currentPage, this.pageSize);
+      },
+      handleSizeChange(pageSize)//调整每页大小
+      {
+        this.currentPage = 1;
+        this.pageSize=pageSize;
+        this.loading = true;
+        this.loadBlogs(this.currentPage, this.pageSize);
       },
       loadBlogs(page, count){
         var _this = this;

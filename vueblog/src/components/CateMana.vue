@@ -289,7 +289,7 @@
         selItems: [],
         categories: [],
         loading: false,
-
+        //新增和编辑功能
         dialogFormVisible: false,
         editObj: {
           id: '',
@@ -300,7 +300,7 @@
           addCategory: '新增',
           editCategory: "编辑"
         },
-        dialogStatus: "",//新增和编辑弹框标题
+        dialogStatus: "",//新增和编辑弹框标题，枚举值：addCategory、editCategory
         pickerOptions: {
           shortcuts: [
             {

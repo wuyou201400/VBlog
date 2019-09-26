@@ -8,9 +8,7 @@ import DataCharts from '@/components/DataCharts'
 import PostArticle from '@/components/PostArticle'
 import UserMana from '@/components/UserMana'
 import BlogDetail from '@/components/BlogDetail'
-
 Vue.use(Router)
-
 export default new Router({
   routes: [
     {
